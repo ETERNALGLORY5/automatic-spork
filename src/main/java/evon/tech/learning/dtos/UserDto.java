@@ -8,27 +8,31 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class UserDto {
+
     private String userId;
 
-   // @Column(name = "user_name")
+   // @Column(name ="name")
     private String name;
 
-   // @Column(name="user_email", unique =true)
+  //  @Column(name = "user_name")
+    private String username;
+
+  //  @Column(name = "user_email",unique=true)
     private String email;
 
-   // @Column(name= "user_password", length=500)
+  //  @Column(name = "user_password",length =500)
     private String password;
 
-   // @Column
+
+ //   @Column(name = "user_gender")
     private String gender;
 
-   // @Column(length=1000)
-    private String about;
+  //  @Column(name = "user_image_name")
+    private String imagename;
 
-   // @Column(name="user_image_name")
-    private String imageName;
+
 }
