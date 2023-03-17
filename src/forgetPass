@@ -1,0 +1,37 @@
+ @Override
+    public UserDetailsDto forgetPassword(ForgetPasswordRequestDto forgetPasswordRequestDto) {
+        Optional<Users> userData;
+        if(!forgetPasswordRequestDto.getUsername().isEmpty() ) {
+            userData = userRepository.findUserByUsername(forgetPasswordRequestDto.getUsername());
+        } else {
+            userData = userRepository.findUserByEmail(forgetPasswordRequestDto.getEmail());
+        }
+        Integer otp = OtpService.generetaOtp();
+        if(userData.isEmpty()) {
+            throw new RuntimeException("No user find with given details");
+        }
+        Users user = userData.get();
+        user.setOtp(otp);
+        user.setOtpExpires(LocalDateTime.now().plusMinutes(OTP_EXPIRES_MINUTES));
+        user = userRepository.save(user);
+        UserDetailsDto userDetails = userMapper.userToUserDetailsResponse(user);
+        return userDetails;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    @OneNotNull(
+        fields = {"username","email"},
+        message="Either username or email must be set"
+)
+@Data
+public class ForgetPasswordRequestDto {
+    public String email;
+
+    public String username;
+}
